@@ -52,8 +52,9 @@ api.delete('/:id', (req, res) => {
         let noteString = notes.filter(note => note.id !== id)
         let newNoteString = JSON.stringify(noteString);
         console.log(noteString);
-        fs.writeFile('./db/db.json', newNoteString, (err) =>
+        const updatedVersion = fs.writeFile('./db/db.json', newNoteString, (err) =>
             err ? console.error(err) : console.log('Note has been removed.'));
+        res.send(updatedVersion);
     } else {
         res.status(400).send('Note ID not provided');
     }
